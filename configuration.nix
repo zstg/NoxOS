@@ -2,14 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ pkgs, modulesPath, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
+  imports =[ 
+  	"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+  ];
+  nixpkgs.hostPlatform = "x86_64-linux";
   # Use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Use the systemd-boot EFI boot loader.
@@ -18,7 +17,7 @@
 
   networking.hostName = "NoxOS"; # Define your hostname.
   # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.

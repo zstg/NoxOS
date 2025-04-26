@@ -19,12 +19,12 @@
     in 
     {
       nixosConfigurations = {
-        iso = nixpkgs.lib.nixosSystem {
+        exampleIso = nixpkgs.lib.nixosSystem {
           inherit system;
 		  specialArgs = { inherit inputs; };
           modules = [
             ./configuration.nix
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            # (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             home-manager.nixosModules.home-manager {
               home-manager = {
                 backupFileExtension = "/tmp/${toString self.lastModified}.bak";
