@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixos.url = "github:NixOS/nixos-hardware/master";
     
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -14,35 +13,38 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
-      lib = nixpkgs.lib;                                                         
       pkgs = nixpkgs.legacyPackages.${system};
-    in 
-    {
+      lib = nixpkgs.lib;
+    in {
       nixosConfigurations = {
-        exampleIso = nixpkgs.lib.nixosSystem {
+        default = lib.nixosSystem {
           inherit system;
-		  specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; };
           modules = [
             ./configuration.nix
-            # (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-            home-manager.nixosModules.home-manager {
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            home-manager.nixosModules.home-manager
+            {
               home-manager = {
                 backupFileExtension = "/tmp/${toString self.lastModified}.bak";
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 # users.stig = {
-                #  home.stateVersion = "25.05";
+                #   home.stateVersion = "25.05";
                 # };
               };
             }
           ];
         };
-        
-        homeConfigurations.stig = home-manager.lib.homeManagerConfiguration  {
-          modules = [ 
-            ./home.nix 
-          ];
+      };
+
+      homeConfigurations = {
+        stig = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home.nix ];
         };
       };
+
+      packages.${system}.default = self.nixosConfigurations.default.config.system.build.isoImage;
     };
 }

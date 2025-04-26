@@ -8,6 +8,7 @@
   imports =[ 
   	"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
+  nix.extraOptions = "experimental-features = nix-command flakes";
   nixpkgs.hostPlatform = "x86_64-linux";
   boot.supportedFilesystems.zfs = lib.mkForce false;
   # Use the latest kernel
@@ -98,7 +99,7 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
+  # system.copySystemConfiguration = true; Doesn't work with flakes
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
