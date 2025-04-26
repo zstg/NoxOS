@@ -9,6 +9,7 @@
   	"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
   nixpkgs.hostPlatform = "x86_64-linux";
+  boot.supportedFilesystems.zfs = lib.mkForce false;
   # Use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # Use the systemd-boot EFI boot loader.

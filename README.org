@@ -1,5 +1,4 @@
 * To build
 #+BEGIN_SRC shell
-NIXPKGS_ALLOW_BROKEN=1 nix build \
-                               .#nixosConfigurations.exampleIso.config.system.build.isoImage --impure -I nixos-config=configuration.nix
+NIXPKGS_ALLOW_BROKEN=1 nix build .#nixosConfigurations.exampleIso.config.system.build.isoImage --impure -I nixos-config=configuration.nix --verbose
 #+END_SRC
