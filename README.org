@@ -1,0 +1,4 @@
+* To build
+#+BEGIN_SRC shell
+nix build .#nixosConfigurations.NoxOS.config.system.build.isoImage
+#+END_SRC
