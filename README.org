@@ -2,3 +2,13 @@
 #+BEGIN_SRC shell
 NIXPKGS_ALLOW_BROKEN=1 nix build .#nixosConfigurations.exampleIso.config.system.build.isoImage --impure -I nixos-config=configuration.nix --verbose
 #+END_SRC
+
+* To install using the ISO
+Assuming you're using [[https://gitlab.com/zstg/nixos-config][my]] NixOS config. Modify as per your requirements.
+#+BEGIN_SRC fish
+git clone https://gitlab.com/zstg/nixos-config ~/.nixos
+sudo nix run nixpkgs#disko -- --mode destroy,format,mount ~/.nixos/hosts/vm/disko.nix
+sudo nixos-install \
+     # --root /mnt
+     --flake ~/.nixos/#vm
+#+END_SRC
