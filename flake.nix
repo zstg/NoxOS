@@ -8,12 +8,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-/*    
-    disko = {
-      url = "github:nix-community/disko/latest";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-*/    
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
@@ -29,8 +23,7 @@
           modules = [
             ./configuration.nix
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            home-manager.nixosModules.home-manager
-            {
+            home-manager.nixosModules.home-manager {
               home-manager = {
                 backupFileExtension = "/tmp/${toString self.lastModified}.bak";
                 useGlobalPkgs = true;
