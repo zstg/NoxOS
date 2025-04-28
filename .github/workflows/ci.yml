@@ -33,7 +33,7 @@ jobs:
       - name: Build Gnome ISO
         run: |
           nix build
-          mv result/iso/nixos-minimal-*-x86_64-linux.iso gnome.iso
+          sudo mv result/iso/nixos-minimal-*-x86_64-linux.iso gnome.iso
 
       - name: Create GitHub Release
         id: create_release
